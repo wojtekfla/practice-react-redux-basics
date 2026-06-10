@@ -11,6 +11,7 @@ import Task05 from "./../../05/Task05";
 const initialState = {
   message: "Działa!",
   time: new Date(),
+  users: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         time: new Date(),
       };
+    case "addUser":
+      const lastId = state.users.reduce(
+        (max, user) => (max > user.id ? max : user.id),
+        0,
+      );
+      const newUser = {
+        id: lastId + 1,
+        name: action.payload,
+      };
+      return {
+        ...state,
+        users: [...state.users, newUser],
+      };
+
+    case "removeUser":
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== action.payload),
+      };
+
     default:
       return state;
   }
@@ -36,7 +57,7 @@ const App = () => {
       <Task01 />
       <Task02 />
       <Task03 />
-      {/* <Task04 /> */}
+      <Task04 />
       {/* <Task05 /> */}
     </Provider>
   );
