@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { addUser } from "../store/actions";
 import UserItem from "./UserItem";
 
 class UserList extends React.Component {
@@ -17,8 +18,8 @@ class UserList extends React.Component {
     if (!newName) {
       return;
     }
-    this.props.addUser(newName);
 
+    this.props.addUser(newName);
     this.setState({ name: "" });
   };
 
@@ -46,8 +47,6 @@ const mapStateToProps = (state) => ({
   users: state.users,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  addUser: (name) => dispatch({ type: "addUser", payload: name }),
-});
+const mapDispatchToProps = { addUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserList);
